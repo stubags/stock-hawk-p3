@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/stocks_fragment"
+              android:name="com.sam_chordas.android.stockhawk.ui.StocksActivityFragment"
+              tools:layout="@layout/fragment_stocks"
+              tools:context="com.sam_chordas.android.stockhawk.ui.StocksActivityFragment"
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+    />
+
+    <FrameLayout android:layout_width="0dp"
+                 android:layout_weight="1"
+                 android:layout_height="match_parent"
+                 android:id="@+id/stock_detail_container"
+    />
+
+</LinearLayout>
