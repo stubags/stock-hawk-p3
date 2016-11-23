@@ -195,11 +195,6 @@ public class StockDetailActivityFragment extends Fragment implements LoaderManag
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-//        while(data.moveToNext()) {
-//            for(int i = 0; i < data.getColumnCount(); ++i) {
-//                Log.i(LOG_TAG, "Column " + data.getColumnName(i) + " value " + data.getString(i));
-//            }
-//        }
         Log.w(LOG_TAG, "in onLoadFinished with " + loader.getId() + " and " + data.getCount() + " data entries");
         if(loader.getId() == STOCK_LOADER)
             fragmentHolder.tryLineChart(data, bid, stock);

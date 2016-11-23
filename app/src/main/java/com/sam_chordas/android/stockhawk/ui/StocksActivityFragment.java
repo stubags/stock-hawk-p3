@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -22,6 +23,7 @@ import android.util.Log;
 import android.view.*;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.PeriodicTask;
@@ -58,6 +60,7 @@ public class StocksActivityFragment extends Fragment implements LoaderManager.Lo
     private TextView mEmptyView;
     private boolean mIntentServiceInitialised = false;
     private boolean mStartedPeriodicTask = false;
+    private boolean mLoaded = false;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -165,7 +168,7 @@ public class StocksActivityFragment extends Fragment implements LoaderManager.Lo
         fab.attachToRecyclerView(mRecyclerView);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                if (mIsConnected){
+                if (mIsConnected && mLoaded){
                     new MaterialDialog.Builder(getActivity()).title(R.string.symbol_search)
                             .content(R.string.content_test)
                             .inputType(InputType.TYPE_CLASS_TEXT)
@@ -173,12 +176,9 @@ public class StocksActivityFragment extends Fragment implements LoaderManager.Lo
                                 @Override public void onInput(MaterialDialog dialog, CharSequence input) {
                                     // On FAB click, receive user input. Make sure the stock doesn't already exist
                                     // in the DB and proceed accordingly
-                                    Cursor c = getActivity().getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI,
-                                            new String[] { QuoteColumns.SYMBOL }, QuoteColumns.SYMBOL + "= ?",
-                                            new String[] { input.toString() }, null);
-                                    if (c.getCount() != 0) {
+                                    if(isUpByStock.containsKey(input.toString().toUpperCase())) {
                                         Toast toast =
-                                                Toast.makeText(getActivity(), "This stock is already saved!",
+                                                Toast.makeText(getActivity(), getContext().getString(R.string.stock_already_saved),
                                                         Toast.LENGTH_LONG);
                                         toast.setGravity(Gravity.CENTER, Gravity.CENTER, 0);
                                         toast.show();
@@ -285,6 +285,7 @@ public class StocksActivityFragment extends Fragment implements LoaderManager.Lo
                 ComponentName name = new ComponentName(getContext(), StockHawkWidgetProvider.class);
                 int[] appWidgetIds = AppWidgetManager.getInstance(getContext()).getAppWidgetIds(name);
                 AppWidgetManager.getInstance(getContext()).notifyAppWidgetViewDataChanged(appWidgetIds, R.id.stocklist_view);
+                mLoaded = true;
             } else {
                 mRecyclerView.setVisibility(View.GONE);
                 mEmptyView.setVisibility(View.VISIBLE);

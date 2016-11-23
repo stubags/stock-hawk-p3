@@ -29,4 +29,5 @@
   <string name="empty_view_text">Nothing to see here, move along</string>
   <string name="empty_view_text_no_internet">No data, and no internet connection, please connect to the internet</string>
   <string name="title_activity_stock_hawk_app_widget_configure">StockHawkAppWidgetConfigure</string>
+  <string name="stock_already_saved">Choose a symbol that is not already in the list.</string>
 </resources>

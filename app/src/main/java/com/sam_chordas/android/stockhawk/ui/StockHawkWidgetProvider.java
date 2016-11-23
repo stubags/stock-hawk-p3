@@ -40,7 +40,6 @@ public class StockHawkWidgetProvider extends AppWidgetProvider {
             newIntent.putExtra(context.getString(R.string.extras_isup), isUp);
             newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
             context.startActivity(newIntent);
-            //Toast.makeText(context, "Touched view " + viewIndex, Toast.LENGTH_SHORT).show();
         }
         super.onReceive(context, intent);
     }
@@ -77,7 +76,6 @@ public class StockHawkWidgetProvider extends AppWidgetProvider {
             Intent toastIntent = new Intent(context, StockHawkWidgetProvider.class);
             // Set the action for the intent.
             // When the user touches a particular view, it will have the effect of
-            // broadcasting TOAST_ACTION.
             toastIntent.setAction(LAUNCH_SH);
             toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
